@@ -1,0 +1,57 @@
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  --keySize: 5vw;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: lavender;
+}
+
+.conteiner {
+  margin: 0 auto;
+  min-height: 100vh;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+}
+
+.textblock {
+  min-height: 20vw;
+  max-height: 40vh;
+  overflow: auto;
+  color: rgba(238, 130, 238, 0.437);
+  border: 2px solid violet;
+  background: rgba(238, 130, 238, 0.335);
+}
+
+.language {
+  display: flex;
+  justify-content: space-around;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.keyboard__button {
+  height: var(--keySize);
+  background: rgb(231, 37, 196);
+  text-align: center;
+  font-size: medium;
+  line-height: 1;
+  border: 2px solid black;
+  transition: 0.4s;
+  user-select: none;
+}
+
+.keyboard__button_width_100 {
+  width: var(--keySize);
+}
