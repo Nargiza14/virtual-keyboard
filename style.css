@@ -17,18 +17,19 @@ body {
 .conteiner {
   margin: 0 auto;
   min-height: 100vh;
-  width: 80vw;
+  width: 90vw;
   display: flex;
   justify-content: center;
 }
 
 .textblock {
-  min-height: 20vw;
-  max-height: 40vh;
+  min-height: 10vw;
+  max-height: 30vh;
   overflow: auto;
   color: rgba(238, 130, 238, 0.437);
   border: 2px solid violet;
   background: rgba(238, 130, 238, 0.335);
+  box-sizing: border-box;
 }
 
 .language {

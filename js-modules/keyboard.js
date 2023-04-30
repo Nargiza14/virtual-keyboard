@@ -1,5 +1,5 @@
 // import buttons first
-import { allButtons } from "./buttons.js";
+import allButtons from "./buttons.js";
 
 const en = "en";
 const ru = "ru";
@@ -8,13 +8,9 @@ const capitalCase = "shifted";
 const autoLang = "keyboardLang";
 class keyboardBlock {
   constructor() {
-    this.language = localStorage.getItem(autoLang) || en;
+    this.lang = localStorage.getItem(autoLang) || en;
     this.capitalize = lowerCase;
     this.capslocked = false;
-  }
-
-  chooseLanguage() {
-    this.language = this.language === en ? ru : en;
   }
 
   makeButton() {
@@ -22,7 +18,7 @@ class keyboardBlock {
     const keyCodes = Object.keys(allButtons);
     keyCodes.forEach((key) => {
       const button = document.createElement("div");
-      button.textContent = allButtons[key].key[this.capitalize][this.language];
+      button.textContent = allButtons[key].key[this.capitalize][this.lang];
       button.classList.add("keyboard__button");
       button.classList.add(`keyboard__button_width_${allButtons[key].width}`);
       button.dataset.code = key;
@@ -30,6 +26,10 @@ class keyboardBlock {
     });
 
     return part;
+  }
+
+  chooseLanguage() {
+    this.lang = this.lang === en ? ru : en;
   }
 
   capitalShift() {
@@ -45,7 +45,7 @@ class keyboardBlock {
     for (let i = 0; i < keyboardBtns.length; i += 1) {
       keyboardBtns[i].textContent =
         allButtons[keyboardBtns[i].dataset.code].key[this.capitalize][
-          this.language
+          this.lang
         ];
     }
   }
@@ -60,7 +60,7 @@ class keyboardBlock {
     keyboard.classList.add("keyboard");
     const language = document.createElement("div");
     language.innerHTML =
-      '<div class="lang"><p>Change language: <span>alt</span> + <span>shift</span></p></div>';
+      '<div class="lang__add"><p>Change language: <span>alt</span> + <span>shift</span></p></div>';
     language.classList.add("language");
     conteiner.appendChild(keyboard);
     keyboard.appendChild(this.makeButton());
@@ -85,7 +85,7 @@ class keyboardBlock {
       }
     });
     window.addEventListener("beforeunload", () => {
-      localStorage.setItem(autoLang, this.language);
+      localStorage.setItem(autoLang, this.lang);
     });
   }
 }
