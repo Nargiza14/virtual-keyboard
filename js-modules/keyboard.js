@@ -60,7 +60,7 @@ class keyboardBlock {
     keyboard.classList.add("keyboard");
     const language = document.createElement("div");
     language.innerHTML =
-      '<div class="lang__add"><p>Change language: <span>alt</span> + <span>ctrl</span></p></div>';
+      '<div class="lang__add"><p>Change language: <span>alt</span> + <span>ctrl.</br>Created on macOS</span></p></div>';
     language.classList.add("language");
     conteiner.appendChild(keyboard);
     keyboard.appendChild(this.makeButton());
