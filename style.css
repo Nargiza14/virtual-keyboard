@@ -17,7 +17,7 @@ body {
 .conteiner {
   margin: 0 auto;
   min-height: 100vh;
-  width: 90vw;
+  width: 78vw;
   display: flex;
   justify-content: space-around;
   flex-direction: column;
@@ -48,13 +48,27 @@ body {
   height: var(--keySize);
   background: rgb(231, 37, 196);
   text-align: center;
-  font-size: medium;
+  font-size: large;
   line-height: 1;
   border: 2px solid black;
   transition: 0.4s;
   user-select: none;
+  padding-top: 1rem;
+  font-weight: bold;
 }
 
 .keyboard__button_width_100 {
   width: var(--keySize);
+}
+.keyboard__button_width_125 {
+  width: calc(var(--keySize) * 1.25);
+  flex-grow: 1;
+}
+.keyboard__button_width_200 {
+  width: calc(var(--keySize) * 2);
+  flex-grow: 1;
+}
+.keyboard__button_width_700 {
+  width: calc(var(--keySize) * 7);
+  flex-grow: 1;
 }
