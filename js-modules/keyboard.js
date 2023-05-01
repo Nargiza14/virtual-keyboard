@@ -1,14 +1,14 @@
 // import buttons first
 import allButtons from "./buttons.js";
 
-const en = "en";
-const ru = "ru";
+const engl = "en";
+const russ = "ru";
 const lowerCase = "normal";
 const capitalCase = "shifted";
 const autoLang = "keyboardLang";
 class keyboardBlock {
   constructor() {
-    this.lang = localStorage.getItem(autoLang) || en;
+    this.lang = localStorage.getItem(autoLang) || engl;
     this.capitalize = lowerCase;
     this.capslocked = false;
   }
@@ -29,7 +29,7 @@ class keyboardBlock {
   }
 
   chooseLanguage() {
-    this.lang = this.lang === en ? ru : en;
+    this.lang = this.lang === engl ? russ : engl;
   }
 
   capitalShift() {
@@ -41,7 +41,7 @@ class keyboardBlock {
   }
 
   showButton() {
-    const keyboardBtns = document.querySelectorAll("keyboard__button");
+    const keyboardBtns = document.querySelectorAll(".keyboard__button");
     for (let i = 0; i < keyboardBtns.length; i += 1) {
       keyboardBtns[i].textContent =
         allButtons[keyboardBtns[i].dataset.code].key[this.capitalize][
@@ -60,13 +60,13 @@ class keyboardBlock {
     keyboard.classList.add("keyboard");
     const language = document.createElement("div");
     language.innerHTML =
-      '<div class="lang__add"><p>Change language: <span>alt</span> + <span>shift</span></p></div>';
+      '<div class="lang__add"><p>Change language: <span>alt</span> + <span>ctrl</span></p></div>';
     language.classList.add("language");
     conteiner.appendChild(keyboard);
     keyboard.appendChild(this.makeButton());
     conteiner.appendChild(language);
     document.body.appendChild(conteiner);
-    const shiftKey = document.querySelectorAll('[data-code*="Shift"');
+    const shiftKey = document.querySelectorAll('[data-code*="Shift');
     const capslockKey = document.querySelector('[data-code="CapsLock"');
     capslockKey.classList.add("keyboard__button_capslock");
     document.addEventListener("keydown", (e) => {
@@ -80,6 +80,7 @@ class keyboardBlock {
           ) {
             this.capitalShift();
           }
+
           this.showButton();
         }
 
@@ -161,6 +162,55 @@ class keyboardBlock {
         }
       }
     });
+
+    document.addEventListener("keyup", (e) => {
+      if (allButtons[e.code]) {
+        e.preventDefault();
+        document
+          .querySelector(`[data-code="${e.code}"]`)
+          .classList.remove("keyboard__button_active");
+
+        if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+          this.capitalShift();
+          this.showButton();
+        }
+        if (e.code === "AltLeft" || e.code === "AltRight") {
+          if (e.ctrlKey) {
+            this.chooseLanguage();
+            this.showButton();
+          }
+        }
+        if (e.code === "CapsLock") {
+          this.capitalShift();
+          this.showButton();
+          this.capslockToggle();
+          capslockKey.classList.toggle("keyboard__button_capslock_active");
+        }
+      }
+    });
+
+    const mouseOn = (e) => {
+      if (e.target.classList.contains("keyboard__button")) {
+        document.dispatchEvent(
+          new KeyboardEvent("keydown", { code: e.target.dataset.code })
+        );
+      }
+    };
+    const mouseOff = (e) => {
+      document.dispatchEvent(
+        new KeyboardEvent("keyup", { code: e.target.dataset.code })
+      );
+      e.target.removeEventListener("mouseup", mouseOff);
+      e.target.removeEventListener("mouseout", mouseOff);
+      textblock.focus();
+    };
+
+    document.addEventListener("mousedown", (e) => {
+      mouseOn(e);
+      e.target.addEventListener("mouseup", mouseOff);
+      e.target.addEventListener("mouseout", mouseOff);
+    });
+
     window.addEventListener("beforeunload", () => {
       localStorage.setItem(autoLang, this.lang);
     });

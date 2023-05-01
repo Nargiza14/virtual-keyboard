@@ -28,10 +28,16 @@ body {
   min-height: 20vw;
   max-height: 40vh;
   overflow: auto;
-  color: rgba(238, 130, 238, 0.437);
   border: 2px solid violet;
   background: rgba(238, 130, 238, 0.335);
   box-sizing: border-box;
+  color: black;
+  padding: 10px;
+  font-size: x-large;
+}
+
+.textblock:focus {
+  outline: none;
 }
 
 .language {
@@ -42,6 +48,7 @@ body {
 .keyboard {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .keyboard__button {
@@ -51,16 +58,26 @@ body {
   font-size: large;
   line-height: 1;
   border: 2px solid black;
-  transition: 0.4s;
   user-select: none;
   padding-top: 1rem;
   font-weight: bold;
+}
+
+.keyboard__button:hover {
+  background: aquamarine;
+  transition: 0.4s;
 }
 
 .keyboard__button_active {
   transform-origin: center;
   background-color: aquamarine;
   transform: scale(1);
+}
+
+.keyboard__button_capslock_active {
+  color: aqua;
+  text-transform: uppercase;
+  text-decoration: outline;
 }
 
 .keyboard__button_width_100 {
