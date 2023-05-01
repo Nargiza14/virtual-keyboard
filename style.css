@@ -57,6 +57,12 @@ body {
   font-weight: bold;
 }
 
+.keyboard__button_active {
+  transform-origin: center;
+  background-color: aquamarine;
+  transform: scale(1);
+}
+
 .keyboard__button_width_100 {
   width: var(--keySize);
 }

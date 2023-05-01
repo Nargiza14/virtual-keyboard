@@ -82,6 +82,83 @@ class keyboardBlock {
           }
           this.showButton();
         }
+
+        document
+          .querySelector(`[data-code="${e.code}"]`)
+          .classList.add("keyboard__button_active");
+        const startText = textblock.selectionStart;
+        const indent = "\t";
+        const lineBreak = "\n";
+
+        if (allButtons[e.code].type === "print") {
+          if (startText === textblock.selectionEnd) {
+            textblock.value =
+              textblock.value.slice(0, startText) +
+              allButtons[e.code].key[this.capitalize][this.lang] +
+              textblock.value.slice(textblock.selectionStart);
+          } else {
+            textblock.setRangeText(
+              allButtons[e.code].key[this.capitalize][this.lang]
+            );
+          }
+          textblock.selectionStart = startText + 1;
+          textblock.selectionEnd = textblock.selectionStart;
+        } else if (allButtons[e.code].type === "func") {
+          switch (e.code) {
+            case "Backspace":
+              if (startText === textblock.selectionEnd) {
+                if (startText > 0) {
+                  textblock.value =
+                    textblock.value.slice(0, startText - 1) +
+                    textblock.value.slice(startText);
+                  textblock.selectionStart = startText - 1;
+                  textblock.selectionEnd = textblock.selectionStart;
+                }
+              } else {
+                textblock.setRangeText("");
+              }
+              break;
+            case "NumpadDecimal":
+              if (startText === textblock.selectionEnd) {
+                if (startText < textblock.value.length) {
+                  textblock.value =
+                    textblock.value.slice(0, startText) +
+                    textblock.value.slice(startText + 1);
+                  textblock.selectionStart = startText;
+                  textblock.selectionEnd = textblock.selectionStart;
+                }
+              } else {
+                textblock.setRangeText("");
+              }
+              break;
+            case "Tab":
+              if (startText === textblock.selectionEnd) {
+                textblock.value =
+                  textblock.value.slice(0, startText) +
+                  indent +
+                  textblock.value.slice(textblock.selectionStart);
+              } else {
+                textblock.setRangeText(indent);
+              }
+              textblock.selectionStart = startText + 1;
+              textblock.selectionEnd = textblock.selectionStart;
+              break;
+            case "Enter":
+              if (startText === textblock.selectionEnd) {
+                textblock.value =
+                  textblock.value.slice(0, startText) +
+                  lineBreak +
+                  textblock.value.slice(textblock.selectionStart);
+              } else {
+                textblock.setRangeText(lineBreak);
+              }
+              textblock.selectionStart = startText + 1;
+              textblock.selectionEnd = textblock.selectionStart;
+              break;
+            default:
+              break;
+          }
+        }
       }
     });
     window.addEventListener("beforeunload", () => {
